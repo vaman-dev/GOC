@@ -535,8 +535,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 200673826}
-  offset: {x: 6.29, y: -0.03, z: -10}
-  smoothSpeed: 0.0199
+  offset: {x: 4.61, y: 1.48, z: -10}
+  smoothSpeed: 0.06
 --- !u!114 &572350937 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1020798582634164171, guid: 97cc4c8d83516f04fb83a33c5d9ac37c, type: 3}

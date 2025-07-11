@@ -6,6 +6,7 @@ namespace Endless2DFe.Data.Scripts
     {
         [SerializeField] private Transform spawnPoint;
         [SerializeField] private GameObject objectPrefab;
+        [SerializeField] private float PoolDelay = 2f;
 
         private bool hasSpawned = false;
 
@@ -27,10 +28,16 @@ namespace Endless2DFe.Data.Scripts
 
             if (LevelPooling.Instance != null)
             {
-                LevelPooling.Instance.ReturnObject(objectPrefab);
+                StartCoroutine(ReturnCoroutine());
             }
 
             hasSpawned = false;
+        }
+
+        private System.Collections.IEnumerator ReturnCoroutine()
+        {
+            yield return new WaitForSeconds(PoolDelay);
+            LevelPooling.Instance.ReturnObject(objectPrefab);
         }
     }
 }
