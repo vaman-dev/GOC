@@ -5,9 +5,8 @@ using TMPro;
 public class Movement : MonoBehaviour
 {
     [Header("Movement Settings")]
-    [SerializeField] private float baseSpeed = 5f;
+    [SerializeField] private float baseSpeed = 6f;
     [SerializeField] private float jumpForce = 5f;
-    [SerializeField] private float boostMultiplier = 10f;
     [SerializeField] private Rigidbody2D rb;
 
     [Header("Input Actions")]
@@ -30,10 +29,16 @@ public class Movement : MonoBehaviour
     private bool jumpRequested;
     private float currentSpeed;
 
+    // Public read-only properties
+    public float CurrentSpeed => currentSpeed;
+    public float BaseSpeed => baseSpeed;
+
     private void Awake()
     {
         if (rb == null)
             rb = GetComponent<Rigidbody2D>();
+
+        rb.interpolation = RigidbodyInterpolation2D.Interpolate;
 
         if (boxCollider == null)
             boxCollider = GetComponent<BoxCollider2D>();
@@ -52,6 +57,8 @@ public class Movement : MonoBehaviour
 
         if (scorBoard == null)
             Debug.LogWarning("[Awake] ScorBoard is not assigned in the Inspector.", this);
+
+        currentSpeed = baseSpeed; // Initialize speed
     }
 
     private void OnEnable()
@@ -88,19 +95,15 @@ public class Movement : MonoBehaviour
 
     public float CalculateSpeedBasedOnTime()
     {
-        int elapsedTime = (int)Time.time;
-        float targetSpeed = baseSpeed;
+        float maxSpeed = baseSpeed * 3.5f;
+        float rampUpDuration = 90f;
 
-        if (elapsedTime >= 60)
-            targetSpeed = boostMultiplier * 3;
-        else if (elapsedTime >= 30)
-            targetSpeed = boostMultiplier * 2;
-        else if (elapsedTime >= 5)
-            targetSpeed = boostMultiplier * 1;
+        float progress = Mathf.Clamp01(Time.time / rampUpDuration);
+        float targetSpeed = Mathf.Lerp(baseSpeed, maxSpeed, progress);
 
         currentSpeed = Mathf.Lerp(currentSpeed, targetSpeed, Time.deltaTime * 2f);
 
-        Debug.Log($"[Boost] Time: {elapsedTime}s | Target Speed: {targetSpeed} | Current Speed: {currentSpeed}");
+        Debug.Log($"[Smooth Boost] Time: {Time.time:F2}s | Target Speed: {targetSpeed:F2} | Current Speed: {currentSpeed:F2}");
         return currentSpeed;
     }
 
@@ -148,7 +151,7 @@ public class Movement : MonoBehaviour
         }
     }
 
-    void ShowGameOverPanel()
+    private void ShowGameOverPanel()
     {
         if (gameOverPanel != null)
         {
