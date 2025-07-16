@@ -150,7 +150,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parallaxMultiplier: 0.995
-  smoothness: 1000
+  smoothTime: 0.3
 --- !u!212 &18214134
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -195,7 +195,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -4
-  m_Sprite: {fileID: 1030775738644170617, guid: 14dc2085eeb254f4788e3b412fd56bda, type: 3}
+  m_Sprite: {fileID: -5479965735872069631, guid: 19d9801fb5a2f1740a3a00f01b6f8f5d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
